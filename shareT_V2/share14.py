@@ -1,3 +1,5 @@
+# this version is under development and could possibly be affected by bugs or other
+
 import time,threading,os,sqlite3,random,sys,getpass,subprocess,hashlib
 
 global fg
@@ -15,18 +17,20 @@ def intro():
 		pass
 
 
-	print(" \t\tBIENVENUE DANS SHARET\n\t by toutpuissantged \n\t\t contact :: mail :amoussougedeon13@gmail.com  ; whatsapps+telegrame : +228 96870360\n \t\t\tversion : {} \n".format(version))
+	print(" \t\twelcome to SHARET\n\t by toutpuissantged \n\t\t contact :: mail :amoussougedeon13@gmail.com  ; whatsapps+telegrame : +228 96870360\n \t\t\tversion : {} \n".format(version))
 	date=int(time.time())
 	expir=1689807440
 	rest=int(expir-date)
 	r_j=int(rest/(60*60*24))
 
 	if date>=expir :
-	    print("votre logiciel a expirer depuis {} jours et a besoin d'une mise a jour  \n veillez contacter le developeur par mail au toutpuissant69@gmail.com ou sur whatsapps + telegrame sur +228 96870360 \n NB : le present logiciel est 100% gratuit le developeur vous fournira egalement les maj totalement gratuitement .merci".format(-r_j))
+	    print("your software has expired since {} days and needs an update \n please contact the developer by email at toutpuissant69@gmail.com or on whatsapps + telegrame on +228 96870360 \n NB : this software is 100% free the developer will also provide you the updates completely free of charge.
+
+".format(-r_j))
 	    time.sleep(5)
 	    exit()
 	else:
-	    print(" \t\ttemps restant avant la mis a jour : {} jours ".format(r_j))
+	    print(" \t\ttime remaining before the update: {} jours ".format(r_j))
 
 	comp='a'
 	donnee=(comp)
@@ -40,8 +44,8 @@ def intro():
 		conn.close()
 		conn=sqlite3.connect("virtual/system/base.db")
 		cur=conn.cursor()
-		pseudo=input(" entrer votre pseudonyme : ")
-		mcode=input(" entrer votre code secret money : ")
+		pseudo=input(" enter your nickname : ")
+		mcode=input(" enter your secret money code : ")
 		money=100
 		hache=random.randint(1000,9999)
 		pseudo=hashlib.sha224((bytes(pseudo,'utf8'))).hexdigest()
@@ -50,7 +54,7 @@ def intro():
 		don=(pseudo,mcode,money,hache)
 		cur.execute("create table info (pseudo ,code,money,hache integer)")
 		cur.execute("insert into info (pseudo,code,money,hache) values(?,?,?,?)",don)
-		print("enregistrement effectuer ...")
+		print("recording perform ...")
 		conn.commit()
 		cur.close()
 		conn.close()
@@ -58,15 +62,15 @@ def intro():
 	except sqlite3.OperationalError:
 		pass
 
-	defo=input('utiliser les parametres par defaut ?(Y/n) : ')
+	defo=input('use default settings  ?(Y/n) : ')
 	if defo=='n':
-		hosta=input("entrer votre adresse reseau : ")
+		hosta=input("enter your network address: ")
 		if hosta=="":
 		    hosta="localhost"
-		hostb=input("entrer l'adresse de votre ami : ")
+		hostb=input("enter your friend's address: ")
 		if hostb=="":
 		    hostb="localhost"
-		temp=input("temps d'attente de votre ami(en seconde) : ")
+		temp=input("your friend's waiting time (in seconds): ")
 		if temp=="":
 		    temp=1
 	else:
@@ -88,7 +92,7 @@ def serveur():
         host1=hosta
         sock.bind((host1,port))
     if n==0:
-        print(" votre adresse reseau est : ",str(hosta))
+        print("your network address is : ",str(hosta))
         n+=1
     while inte:
         sock.listen()
@@ -100,9 +104,9 @@ def serveur():
                 neu=1
                 nou=0
                 msg3=conn.recv(1024).decode("utf8")
-                print("votre ami vous envoye le fichier => ",str(msg3))
+                print("your friend sends you the file => ",str(msg3))
                 if deb==0:
-                    seuc=input('apuiyer sur entrer pour valider !!! ')
+                    seuc=input('press enter to validate !!! ')
                     if seuc=="":
                         seuc=5
                     else :
@@ -118,19 +122,19 @@ def serveur():
                     tim3=(tim2-tim1)
                     tim4+=tim3
                     if nou==0:
-                        print("reception en cours")
+                        print("reception in progress")
                         nou+=1
                     if tim3>=seuc:
                         tim4=int(tim4)
                         fd.close()
                         neu=0
-                        print("reception de {} terminer avec un temps de {} secondes \n votre message : ".format(msg3,tim4))
+                        print("receive {} end with a time of {} seconds \ n your message : ".format(msg3,tim4))
             elif msg2=="cmd":
                 msg2=conn.recv(1024).decode("utf8")
                 h=subprocess.getoutput(msg2)
                 conn.send(str(h).encode("utf8"))
             elif msg2=="exit":
-            	print('deconexion !!!')
+            	print('disconnection !!!')
             	time.sleep(1)
             	sys.exit()
             elif msg2=='check':
@@ -154,7 +158,7 @@ def serveur():
             elif msg2=="money":
                 mrecu=""
                 mrecu=conn.recv(1024).decode("utf8")
-                print("tu vient de recevoir {} money".format(mrecu))
+                print("you just received {} money".format(mrecu))
                 mrecu=int(mrecu)
                 if mrecu !=0:
                     conn2=sqlite3.connect("virtual/system/base.db")
@@ -190,7 +194,7 @@ def serveur():
                     conn2.close()
             else : 
                 time.sleep(0.0)
-                print("\n message de votre ami : ",str(msg2))
+                print("\n message from your friend: ",str(msg2))
 
                 
 def client():
@@ -203,22 +207,22 @@ def client():
    pss=0
    tmoney=0
    if inte==0:
-       print("tentative de connection a votre ami ")
+       print("attempt to connect to your friend ")
        time.sleep(int(temp))
        import socket
        host2=hostb
        socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
        socket.connect((host2,port))
-       print("connexion  etablie avec votre ami")
+       print("connection established with your friend")
    while inte ==0:
         time.sleep(0.1)
-        msg = input(" votre message : ")
+        msg = input(" Your message : ")
         msg1=msg
         socket.send(msg.encode("utf8"))
         if msg1=="send":
             while dev:
                 try:
-                    name=input(str(("entrer le nom du fichier ou son chemin complet : ")))
+                    name=input(str(("enter the name of the file or its full path:")))
                     time.sleep(1)
                     if '/' in name:
                     	nes=0
@@ -237,27 +241,27 @@ def client():
                     	fs =open("virtual/sended/"+name,'rb')
                     break
                 except:
-                    print("fichier introuvable !!! veillez verifier le fichier ")
+                    print("file not found !!! please check the file")
             name=raw
-            print("envoie de  {} en cours ...".format(name))
+            print("sending {} in progress ...".format(name))
             socket.send(name.encode("utf8"))
             s1=time.time()
             socket.sendall(fs.read())
             s2=time.time()
             fs.close()
-            print("temps pris pour l'envoye : " ,str(int((s2-s1)))," seconde(s)")
-            print(" envoye reussi \n veillez pattienter quelque seconde puis tapez : ok")
+            print("time taken to send: " ,str(int((s2-s1)))," seconde(s)")
+            print(" sent successful \n please wait a few seconds then type: ok")
             time.sleep(10)
         elif msg1=='sendall':
         	time.sleep(1)
-        	name2=input(str(("entrer le chemin complet du dossier a envoyer : ")))
+        	name2=input(str(("enter the full path of the folder to send: ")))
 
         	try:
         		ch=os.listdir(name2)
         		print(ch)
         		pss=1
         	except:
-        		print('chemin specifier invalide !!! ')
+        		print('invalid path specifier !!! ')
         		socket.send('end'.encode("utf8"))
         		pss=0
         	if pss==1:
@@ -270,7 +274,7 @@ def client():
 
 
         elif msg1=="exit":
-        	print('deconexion !!!')
+        	print('disconnection !!!')
         	time.sleep(3)
         	sys.exit()
         elif msg1=='cmd':
@@ -280,21 +284,21 @@ def client():
         	print('return >>>',tp)
         elif msg1=='check':
             if dba==True:
-                print('votre montant est de ',str(tmoney))
+                print('your amount is ',str(tmoney))
             else:
-                print('aucun transation effectuer precedement !!!')
+                print('no transaction performed previously !!!')
         elif msg1=='':
-        	print('utilisation : \n send ==> pour envoyer un fichier \n money ==> pour envoyer de l\'argent \n exit==> pour fermer le programme \n check==> votre montant money')
+        	print('use: \n send ==> to send a file \n money ==> to send money \n exit ==> to close the program \n check ==> your money amount')
         elif msg1=="money":
             deb=1
-            msend=input("montant a envoyer : ")
+            msend=input("amount to send : ")
             while deb:
                 try:
                     msend=int(msend)
                     deb=0
                 except :
                     deb=1
-                    msend=input("montant incorrect ; ressayer : ")
+                    msend=input("incorrect amount; try again : ")
             evy=int(msend)
             conn=sqlite3.connect("virtual/system/base.db")
             cur=conn.cursor()
@@ -316,11 +320,11 @@ def client():
             dba=True
             tnum=0
             tb=1
-            mdp=getpass.getpass(" entrer  code secret : ")
+            mdp=getpass.getpass(" enter the secret code : ")
             mdp=hashlib.sha224((bytes(mdp,'utf8'))).hexdigest()
 
             if mdp==liste_n[0]: 
-                print('verification en cours ...')
+                print('verification in progress ...')
                 while tb==1:
                     tb2=hashlib.sha224((bytes(str(tnum),'utf8'))).hexdigest()
                     if tb2==hmoney:
@@ -330,20 +334,20 @@ def client():
                         tnum+=1
                 if evy > tmoney:
                     envy="0"
-                    print(" votre montant est insufisant +{} money d'excedent".format(str(evy-tmoney)))
+                    print(" your amount is insufficient + {} excess money ".format(str(evy-tmoney)))
                 elif 0<evy <= tmoney:
                     envy=str(evy)
                     tmoney = tmoney-evy
                     hmoney=hashlib.sha224((bytes(str(tmoney),'utf8'))).hexdigest()
                     don1=(liste_s[0],liste_n[0],hmoney,liste_h[0])
                     cur.execute("insert into info (pseudo,code,money,hache) values(?,?,?,?)",don1)
-                    print("montant envoyer ")
-                    print("votre montant actuel est de {} money ".format(tmoney))
+                    print("amount send ")
+                    print("your current amount is {} money ".format(tmoney))
                 else:
                     envy="0"
-                    print("une erreur est survenu , transation annuler ")
+                    print("an error occurred, transaction cancel ")
             else:
-                print("mot de passe erronee")
+                print("Wrong password")
                 envy="0"
             socket.sendall(envy.encode("utf8"))
             conn.commit()
