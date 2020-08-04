@@ -1,0 +1,10 @@
+for the commands to use, you can directly display them in the program
+by typing the enter key on your keyboard.
+here are the commands currently available ==>
+send: to send a file;
+money: to transfer the virtual money embark;
+exit: to close the program;
+check: to consult the amount of money available;
+and the reserver command is cmd: to gain advance access to the target device;
+these are the commands of version 0.7 of the program, the more evolving versions will have more chance to contain new functionalities. thks !!!
+email address: amoussougedeon13@gmail.com 
