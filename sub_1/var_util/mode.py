@@ -1,0 +1,1 @@
+mode="cette vesrion du code est en production , elle peut etre instable et contenire des bug , veillez m'en excusez sa vous arrivait et merci de (si vous le souhaitame ) me faire part de votre experience au amoussougedeon13@gmail.com "
